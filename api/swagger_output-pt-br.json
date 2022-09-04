@@ -1,0 +1,1848 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "API de Integração Alfred",
+    "description" : "Api de produtos e fretes"
+  },
+  "host" : "product-public.alfreddelivery.com",
+  "basePath" : "/",
+  "tags" : [ {
+    "name" : "Status",
+    "description" : "Products Status"
+  }, {
+    "name" : "Categorias do Produto",
+    "description" : "Categorias do Cardápio"
+  }, {
+    "name" : "Produtos",
+    "description" : "Cadastro e Edição de Produtos e seus Componentes"
+  }, {
+    "name" : "Complementos",
+    "description" : "Complemento dos Produtos"
+  }, {
+    "name" : "Frete",
+    "description" : "Integração com o pedido Empresarial"
+  } ],
+  "schemes" : [ "https" ],
+  "securityDefinitions" : {
+    "Bearer" : {
+      "type" : "apiKey",
+      "name" : "Authorization",
+      "in" : "header"
+    }
+  },
+  "consumes" : [ ],
+  "produces" : [ ],
+  "security" : [ {
+    "bearerAuth" : [ ]
+  } ],
+  "paths" : {
+    "/products/getstatus" : {
+      "get" : {
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "Status" ],
+        "description" : "Status utilizados no cadastro e edição de Produto.",
+        "parameters" : [ {
+          "name" : "draw",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Controle de Requisição"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Limite de Listagem. Máximo 50"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Índice de Deslocamento"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        },
+        "summary" : "Lista os Status de Produto"
+      }
+    },
+    "/products/getcomplementstatus" : {
+      "get" : {
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Lista os status utilizados no cadastro e edição de complementos e subcomplementos.",
+        "parameters" : [ {
+          "name" : "draw",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Controle de Requisição"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Limite de Listagem. Máximo 50"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Índice de Deslocamento"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        },
+        "tags" : [ "Status" ],
+        "summary" : "Lista Status de Complementos"
+      }
+    },
+    "/products/getsectors" : {
+      "get" : {
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Lista os Setores de Produtos utilizados no cadastro e edição de produtos.",
+        "parameters" : [ {
+          "name" : "draw",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Controle de Requisição"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Limite de Listagem. Máximo 50"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Índice de Deslocamento"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        },
+        "summary" : "Lista Setores de Produtos",
+        "tags" : [ "Categorias do Produto" ]
+      }
+    },
+    "/products/getcategories" : {
+      "get" : {
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Lista as Categorias dos Produtos, essas categorias são mostradas no cardápio.",
+        "summary" : "Lista Categorias",
+        "parameters" : [ {
+          "name" : "draw",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Controle de Requisição"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Limite de Listagem. Máximo 50"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Índice de Deslocamento"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        },
+        "tags" : [ "Categorias do Produto" ]
+      }
+    },
+    "/product/categories/new" : {
+      "post" : {
+        "tags" : [ "Categorias do Produto" ],
+        "description" : "Nova Categoria dos Produtos, essas categorias são mostradas no cardápio.",
+        "summary" : "Nova Categoria",
+        "parameters" : [ {
+          "name" : "obj",
+          "in" : "body",
+          "schema" : {
+            "type" : "object",
+            "required" : [ "name" ],
+            "properties" : {
+              "name" : {
+                "type" : "string",
+                "example" : "Nome da Categoria",
+                "description" : "Nome da Categoria."
+              },
+              "paused" : {
+                "type" : "boolean",
+                "example" : false,
+                "description" : "Pausar Categoria?"
+              },
+              "priority" : {
+                "type" : "integer",
+                "example" : 1234,
+                "description" : "Prioridade na Lista"
+              },
+              "sector" : {
+                "type" : "integer",
+                "example" : 1000,
+                "description" : "Id do Setor de produto"
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/categories/edit" : {
+      "put" : {
+        "tags" : [ "Categorias do Produto" ],
+        "description" : "Edita Categoria dos Produtos, essas categorias são mostradas no cardápio.",
+        "summary" : "Editar Categoria",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id da Categoria"
+        }, {
+          "name" : "obj",
+          "in" : "body",
+          "schema" : {
+            "type" : "object",
+            "required" : [ "name" ],
+            "properties" : {
+              "name" : {
+                "type" : "string",
+                "example" : "Nome da Categoria",
+                "description" : "Nome da Categoria."
+              },
+              "paused" : {
+                "type" : "boolean",
+                "example" : false,
+                "description" : "Pausar Categoria?"
+              },
+              "priority" : {
+                "type" : "integer",
+                "example" : 1234,
+                "description" : "Prioridade na Lista"
+              },
+              "sector" : {
+                "type" : "integer",
+                "example" : 1000,
+                "description" : "Id do Setor de produto"
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/categories/delete" : {
+      "delete" : {
+        "tags" : [ "Categorias do Produto" ],
+        "description" : "Apaga Categoria dos Produtos, essas categorias são mostradas no cardápio.",
+        "summary" : "Apaga Categoria",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id da Categoria"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/getpictures" : {
+      "get" : {
+        "tags" : [ "Produtos" ],
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Lista foto(s) cadastradas no produto",
+        "parameters" : [ {
+          "name" : "draw",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Controle de Requisição"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Limite de Listagem. Máximo 50"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Índice de Deslocamento"
+        }, {
+          "name" : "product",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "ID do Produto"
+        } ],
+        "summary" : "Lista fotos dos Produtos",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/getavailability" : {
+      "get" : {
+        "tags" : [ "Produtos" ],
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Lista horários de disponibilidade do produto. Produtos com horário, serão ativados e desativados automaticamente",
+        "summary" : "Lista Disponibilidade do Produto",
+        "parameters" : [ {
+          "name" : "draw",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Controle de Requisição"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Limite de Listagem. Máximo 50"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Índice de Deslocamento"
+        }, {
+          "name" : "product",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "ID do Produto"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/gettypes" : {
+      "get" : {
+        "tags" : [ "Produtos" ],
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Lista complementos e subcomplementos do produto",
+        "summary" : "Lista Complementos",
+        "parameters" : [ {
+          "name" : "draw",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Controle de Requisição"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Limite de Listagem. Máximo 50"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Índice de Deslocamento"
+        }, {
+          "name" : "product",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "ID do Produto"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/get" : {
+      "get" : {
+        "tags" : [ "Produtos" ],
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Lista Produtos Cadastrados",
+        "summary" : "Lista Produtos",
+        "parameters" : [ {
+          "name" : "draw",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Controle de Requisição"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Limite de Listagem. Máximo 50"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Índice de Deslocamento"
+        }, {
+          "name" : "product",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "ID do Produto"
+        }, {
+          "name" : "category",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "ID da Categoria"
+        }, {
+          "name" : "sector",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "ID do Setor"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/get" : {
+      "get" : {
+        "tags" : [ "Produtos" ],
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Busca cadastro completo do produto",
+        "summary" : "Carrega Produto",
+        "parameters" : [ {
+          "name" : "product",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "ID do Produto"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/new" : {
+      "post" : {
+        "tags" : [ "Produtos" ],
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Cadastra novo produto",
+        "summary" : "Novo Produto",
+        "parameters" : [ {
+          "name" : "obj",
+          "in" : "body",
+          "schema" : {
+            "type" : "object",
+            "required" : [ "name", "productPrice", "category", "status" ],
+            "properties" : {
+              "name" : {
+                "type" : "string",
+                "example" : "Nome do Produto",
+                "description" : "Nome do Produto."
+              },
+              "description" : {
+                "type" : "string",
+                "example" : "Descrição do Produto",
+                "description" : "Descrição do Produto."
+              },
+              "productPrice" : {
+                "type" : "number",
+                "example" : 10.0,
+                "description" : "Preço do Produto."
+              },
+              "promotionPrice" : {
+                "type" : "number",
+                "example" : 5.0,
+                "description" : "Preço Promocional do Produto."
+              },
+              "promotionPercent" : {
+                "type" : "number",
+                "example" : 30.0,
+                "description" : "Desconto do Produto (%). Calcula o promotionPrice"
+              },
+              "category" : {
+                "type" : "integer",
+                "example" : 12,
+                "description" : "Id da Categoria do Produto."
+              },
+              "status" : {
+                "type" : "integer",
+                "example" : 1,
+                "description" : "Id do Status do Produto."
+              },
+              "sector" : {
+                "type" : "integer",
+                "example" : 5,
+                "description" : "Id do Setor do Produto."
+              },
+              "priority" : {
+                "type" : "integer",
+                "example" : 1234,
+                "description" : "Prioridade na Listagem do Produto."
+              },
+              "ncm" : {
+                "type" : "string",
+                "example" : "0402.10",
+                "description" : "NCM do Produto."
+              },
+              "sku" : {
+                "type" : "string",
+                "example" : "040210",
+                "description" : "SKU do Produto."
+              },
+              "posCode" : {
+                "type" : "string",
+                "example" : "12356",
+                "description" : "Código Pdv."
+              },
+              "promotion" : {
+                "type" : "boolean",
+                "example" : false,
+                "description" : "Produto em promoção?"
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/edit" : {
+      "put" : {
+        "tags" : [ "Produtos" ],
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Edita produto cadastrado, mediante ID do produto",
+        "summary" : "Editar Produto",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "obj",
+          "in" : "body",
+          "schema" : {
+            "type" : "object",
+            "required" : [ "name", "productPrice", "category", "status" ],
+            "properties" : {
+              "name" : {
+                "type" : "string",
+                "example" : "Nome do Produto",
+                "description" : "Nome do Produto."
+              },
+              "description" : {
+                "type" : "string",
+                "example" : "Descrição do Produto",
+                "description" : "Descrição do Produto."
+              },
+              "productPrice" : {
+                "type" : "number",
+                "example" : 10.0,
+                "description" : "Preço do Produto."
+              },
+              "promotionPrice" : {
+                "type" : "number",
+                "example" : 5.0,
+                "description" : "Preço Promocional do Produto."
+              },
+              "promotionPercent" : {
+                "type" : "number",
+                "example" : 30.0,
+                "description" : "Desconto do Produto (%). Calcula o promotionPrice"
+              },
+              "category" : {
+                "type" : "integer",
+                "example" : 12,
+                "description" : "Id da Categoria do Produto."
+              },
+              "status" : {
+                "type" : "integer",
+                "example" : 1,
+                "description" : "Id do Status do Produto."
+              },
+              "sector" : {
+                "type" : "integer",
+                "example" : 5,
+                "description" : "Id do Setor do Produto."
+              },
+              "priority" : {
+                "type" : "integer",
+                "example" : 1234,
+                "description" : "Prioridade na Listagem do Produto."
+              },
+              "ncm" : {
+                "type" : "string",
+                "example" : "0402.10",
+                "description" : "NCM do Produto."
+              },
+              "sku" : {
+                "type" : "string",
+                "example" : "040210",
+                "description" : "SKU do Produto."
+              },
+              "posCode" : {
+                "type" : "string",
+                "example" : "12356",
+                "description" : "Código Pdv."
+              },
+              "promotion" : {
+                "type" : "boolean",
+                "example" : false,
+                "description" : "Produto em promoção?"
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/delete" : {
+      "delete" : {
+        "tags" : [ "Produtos" ],
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Apaga produto cadastrado, mediante ID do produto",
+        "summary" : "Apaga Produto",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id do Produto"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/availability/new" : {
+      "post" : {
+        "tags" : [ "Produtos" ],
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Cadastra nova disponibilidade específica do produto. Produtos com disponibilidade específica só ficarão ativas nos horários cadastrado.",
+        "summary" : "Nova Disponibilidade do Produto",
+        "parameters" : [ {
+          "name" : "product",
+          "in" : "query",
+          "type" : "string",
+          "required" : true,
+          "description" : "Id do Produto a inserir."
+        }, {
+          "name" : "obj",
+          "in" : "body",
+          "schema" : {
+            "type" : "object",
+            "required" : [ "weekDay", "startTime", "endTime", "status" ],
+            "properties" : {
+              "weekDay" : {
+                "type" : "integer",
+                "example" : 1,
+                "description" : "Dia da Semana, Iniciando em 1 (um) domingo."
+              },
+              "startTime" : {
+                "type" : "string",
+                "example" : "17:00:00+00",
+                "description" : "Hora de início."
+              },
+              "endTime" : {
+                "type" : "string",
+                "example" : "17:00:00+00",
+                "description" : "Hora de início."
+              },
+              "status" : {
+                "type" : "boolean",
+                "example" : true,
+                "description" : "Ativo ou Inativo."
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/availability/edit" : {
+      "put" : {
+        "tags" : [ "Produtos" ],
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Edita disponibilidade específica do produto, mediante ID da disponibilidade. Produtos com disponibilidade específica só ficarão ativas nos horários cadastrado.",
+        "summary" : "Editar Disponibilidade do Produto",
+        "parameters" : [ {
+          "name" : "product",
+          "in" : "query",
+          "type" : "string"
+        }, {
+          "name" : "id",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "obj",
+          "in" : "body",
+          "schema" : {
+            "type" : "object",
+            "required" : [ "weekDay", "startTime", "endTime", "status" ],
+            "properties" : {
+              "weekDay" : {
+                "type" : "integer",
+                "example" : 1,
+                "description" : "Dia da Semana, Iniciando em 1 (um) domingo."
+              },
+              "startTime" : {
+                "type" : "string",
+                "example" : "17:00:00+00",
+                "description" : "Hora de início."
+              },
+              "endTime" : {
+                "type" : "string",
+                "example" : "17:00:00+00",
+                "description" : "Hora de início."
+              },
+              "status" : {
+                "type" : "boolean",
+                "example" : true,
+                "description" : "Ativo ou Inativo."
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/availability/delete" : {
+      "delete" : {
+        "tags" : [ "Produtos" ],
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Apaga disponibilidade específica do produto, mediante ID da disponibilidade.",
+        "summary" : "Apagar Disponibilidade do Produto",
+        "parameters" : [ {
+          "name" : "product",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id do Produto"
+        }, {
+          "name" : "id",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id da Disponibilidade"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/type/new" : {
+      "post" : {
+        "description" : "Cadastra novo complemento ao produto.",
+        "summary" : "Novo Complemento",
+        "parameters" : [ {
+          "name" : "product",
+          "in" : "query",
+          "type" : "string"
+        }, {
+          "name" : "obj",
+          "in" : "body",
+          "schema" : {
+            "type" : "object",
+            "required" : [ "name", "min", "max", "mandatory", "status" ],
+            "properties" : {
+              "name" : {
+                "type" : "string",
+                "example" : "Complemento do Produto",
+                "description" : "Nome do complemento do Produto."
+              },
+              "min" : {
+                "type" : "integer",
+                "example" : 1,
+                "description" : "Mínimo a ser escolhido."
+              },
+              "max" : {
+                "type" : "integer",
+                "example" : 1,
+                "description" : "Máximo a ser escolhido."
+              },
+              "mandatory" : {
+                "type" : "boolean",
+                "example" : true,
+                "description" : "Escolha Obrigatória."
+              },
+              "priority" : {
+                "type" : "integer",
+                "example" : 1234,
+                "description" : "Prioridade na Listagem."
+              },
+              "status" : {
+                "type" : "integer",
+                "example" : 1,
+                "description" : "Id do Status do Complemento."
+              },
+              "posCode" : {
+                "type" : "string",
+                "example" : "12345",
+                "description" : "Código de PDV."
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        },
+        "tags" : [ "Complementos" ]
+      }
+    },
+    "/product/type/edit" : {
+      "put" : {
+        "description" : "Edita complemento do produto.",
+        "summary" : "Editar Complemento",
+        "parameters" : [ {
+          "name" : "product",
+          "in" : "query",
+          "type" : "integer",
+          "description" : "Id do Produto"
+        }, {
+          "name" : "id",
+          "in" : "query",
+          "type" : "integer",
+          "description" : "Id do Complemento"
+        }, {
+          "name" : "obj",
+          "in" : "body",
+          "schema" : {
+            "type" : "object",
+            "required" : [ "name", "min", "max", "mandatory", "status" ],
+            "properties" : {
+              "name" : {
+                "type" : "string",
+                "example" : "Complemento do Produto",
+                "description" : "Nome do complemento do Produto."
+              },
+              "min" : {
+                "type" : "integer",
+                "example" : 1,
+                "description" : "Mínimo a ser escolhido."
+              },
+              "max" : {
+                "type" : "integer",
+                "example" : 1,
+                "description" : "Máximo a ser escolhido."
+              },
+              "mandatory" : {
+                "type" : "boolean",
+                "example" : true,
+                "description" : "Escolha Obrigatória."
+              },
+              "priority" : {
+                "type" : "integer",
+                "example" : 1234,
+                "description" : "Prioridade na Listagem."
+              },
+              "status" : {
+                "type" : "integer",
+                "example" : 1,
+                "description" : "Id do Status do Complemento."
+              },
+              "posCode" : {
+                "type" : "string",
+                "example" : "12345",
+                "description" : "Código de PDV."
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        },
+        "tags" : [ "Complementos" ]
+      }
+    },
+    "/product/type/status" : {
+      "put" : {
+        "description" : "Edita somente o status do produto. Para ativação e inativação de complemento.",
+        "summary" : "Status do Complemento",
+        "parameters" : [ {
+          "name" : "product",
+          "in" : "query",
+          "type" : "integer",
+          "description" : "Id do Produto"
+        }, {
+          "name" : "id",
+          "in" : "query",
+          "type" : "integer",
+          "description" : "Id do Complemento"
+        }, {
+          "name" : "obj",
+          "in" : "body",
+          "schema" : {
+            "type" : "object",
+            "required" : [ "status" ],
+            "properties" : {
+              "status" : {
+                "type" : "integer",
+                "example" : 1,
+                "description" : "Id do Status do Complemento."
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        },
+        "tags" : [ "Complementos" ]
+      }
+    },
+    "/product/type/delete" : {
+      "delete" : {
+        "tags" : [ "Complementos" ],
+        "description" : "Apaga o Complemento do Produto.",
+        "summary" : "Apaga Complemento",
+        "parameters" : [ {
+          "name" : "product",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id do Produto"
+        }, {
+          "name" : "id",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id do Complemento"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/subtype/new" : {
+      "post" : {
+        "tags" : [ "Complementos" ],
+        "description" : "Cadastra um novo Subcomplemento a um Complemento.",
+        "summary" : "Novo SubComplemento",
+        "parameters" : [ {
+          "name" : "product",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id do Produto"
+        }, {
+          "name" : "type",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id do Complemento"
+        }, {
+          "name" : "obj",
+          "in" : "body",
+          "schema" : {
+            "type" : "object",
+            "required" : [ "name", "price" ],
+            "properties" : {
+              "name" : {
+                "type" : "string",
+                "example" : "SubComplemento do Produto",
+                "description" : "Nome do Subcomplemento do Produto."
+              },
+              "details" : {
+                "type" : "string",
+                "example" : "Detalhes do SubComplemento",
+                "description" : "Descrição do SubComplemento."
+              },
+              "price" : {
+                "type" : "number",
+                "example" : 1.0,
+                "description" : "Preço do Complemento."
+              },
+              "paused" : {
+                "type" : "boolean",
+                "example" : true,
+                "description" : "Complemento Pausado?"
+              },
+              "priority" : {
+                "type" : "integer",
+                "example" : 1234,
+                "description" : "Prioridade na Listagem."
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/subtype/edit" : {
+      "put" : {
+        "tags" : [ "Complementos" ],
+        "description" : "Edita um Subcomplemento de um Complemento.",
+        "summary" : "Editar SubComplemento",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id do SubComplemento"
+        }, {
+          "name" : "product",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id do Produto"
+        }, {
+          "name" : "type",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id do Complemento"
+        }, {
+          "name" : "obj",
+          "in" : "body",
+          "schema" : {
+            "type" : "object",
+            "required" : [ "name", "price" ],
+            "properties" : {
+              "name" : {
+                "type" : "string",
+                "example" : "SubComplemento do Produto",
+                "description" : "Nome do Subcomplemento do Produto."
+              },
+              "details" : {
+                "type" : "string",
+                "example" : "Detalhes do SubComplemento",
+                "description" : "Descrição do SubComplemento."
+              },
+              "price" : {
+                "type" : "number",
+                "example" : 1.0,
+                "description" : "Preço do Complemento."
+              },
+              "paused" : {
+                "type" : "boolean",
+                "example" : true,
+                "description" : "Complemento Pausado?"
+              },
+              "priority" : {
+                "type" : "integer",
+                "example" : 1234,
+                "description" : "Prioridade na Listagem."
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/subtype/paused" : {
+      "put" : {
+        "tags" : [ "Complementos" ],
+        "description" : "Pausa um Subcomplemento de um Complemento.",
+        "summary" : "Pausa SubComplemento",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id do SubComplemento"
+        }, {
+          "name" : "product",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id do Produto"
+        }, {
+          "name" : "type",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id do Complemento"
+        }, {
+          "name" : "obj",
+          "in" : "body",
+          "schema" : {
+            "type" : "object",
+            "required" : [ "paused" ],
+            "properties" : {
+              "paused" : {
+                "type" : "boolean",
+                "example" : true,
+                "description" : "Complemento Pausado?"
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/subtype/delete" : {
+      "delete" : {
+        "tags" : [ "Complementos" ],
+        "description" : "Apaga um Subcomplemento de um Complemento.",
+        "summary" : "Apaga SubComplemento",
+        "parameters" : [ {
+          "name" : "product",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id do Produto"
+        }, {
+          "name" : "type",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id do Complemento"
+        }, {
+          "name" : "id",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id do SubComplemento"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/picture/new" : {
+      "post" : {
+        "tags" : [ "Produtos" ],
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Cadastra foto para o produto.",
+        "summary" : "Nova Foto do Produto",
+        "parameters" : [ {
+          "name" : "product",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "description" : "Id do Produto"
+        }, {
+          "name" : "file",
+          "in" : "formData",
+          "description" : "Arquivo da Imagem",
+          "required" : true,
+          "type" : "file"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/picture/edit" : {
+      "put" : {
+        "tags" : [ "Produtos" ],
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Edita foto do produto.",
+        "summary" : "Edita Foto do Produto",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id da Foto do Produto"
+        }, {
+          "name" : "product",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "description" : "Id do Produto"
+        }, {
+          "name" : "file",
+          "in" : "formData",
+          "description" : "Arquivo da Imagem",
+          "required" : true,
+          "type" : "file"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/picture/delete" : {
+      "delete" : {
+        "tags" : [ "Produtos" ],
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Apaga foto do produto.",
+        "summary" : "Apaga Foto do Produto",
+        "parameters" : [ {
+          "name" : "product",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id do Produto"
+        }, {
+          "name" : "id",
+          "in" : "query",
+          "type" : "integer",
+          "required" : true,
+          "description" : "Id da Foto do Produto"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "406" : {
+            "description" : "Not Acceptable"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/freight/price" : {
+      "post" : {
+        "tags" : [ "Frete" ],
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Calcula valor do Frete mediante endereços e condições. A função para solicitar o frete utiliza os mesmos parâmetros.",
+        "parameters" : [ {
+          "name" : "obj",
+          "in" : "body",
+          "schema" : {
+            "type" : "object",
+            "properties" : {
+              "origin" : {
+                "type" : "object",
+                "example" : {
+                  "observation" : "",
+                  "complement" : "",
+                  "street" : "Av. 7 de Setembro",
+                  "number" : "240a",
+                  "neighborhood" : "Centro",
+                  "city" : "Mâncio Lima",
+                  "state" : "Acre",
+                  "address" : "Av. 7 de Setembro",
+                  "latitude" : -7.5944881,
+                  "longitude" : -72.9289233
+                }
+              },
+              "selfstart" : {
+                "type" : "boolean",
+                "example" : "false"
+              },
+              "returntostart" : {
+                "type" : "boolean",
+                "example" : "true"
+              },
+              "points" : {
+                "type" : "object",
+                "example" : [ {
+                  "street" : "Rua 31 de Maio",
+                  "number" : 953,
+                  "neighborhood" : "Centro",
+                  "complement" : "",
+                  "observation" : "",
+                  "city" : "Mâncio Lima",
+                  "state" : "Brasil",
+                  "latitude" : -7.616051000000001,
+                  "longitude" : -72.894094,
+                  "address" : "R. 31 de Maio, 953 - Centro, Mâncio Lima - AC, 69990-000, Brasil"
+                }, {
+                  "street" : "Rua Professor Francisca Oliveira",
+                  "number" : "50",
+                  "neighborhood" : "Centro",
+                  "complement" : "",
+                  "observation" : "",
+                  "city" : "Mâncio Lima",
+                  "state" : "Brasil",
+                  "latitude" : -7.6098453,
+                  "longitude" : -72.9114434,
+                  "address" : "R. Prof. Francisca Oliveira, Mâncio Lima - AC, 69990-000, Brasil"
+                }, {
+                  "street" : "Rua Ancelmo Maia",
+                  "number" : "100",
+                  "neighborhood" : "Centro",
+                  "complement" : "",
+                  "observation" : "",
+                  "city" : "Mâncio Lima",
+                  "state" : "Brasil",
+                  "latitude" : -7.618470999999999,
+                  "longitude" : -72.91266999999999,
+                  "address" : "R. Ancelmo Maia, Mâncio Lima - AC, 69990-000, Brasil"
+                } ]
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        },
+        "summary" : "Calcular o valor do Frete"
+      }
+    },
+    "/freight/new" : {
+      "post" : {
+        "tags" : [ "Frete" ],
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Solicita pedido de entrega empresarial.",
+        "summary" : "Solicita Empresarial",
+        "parameters" : [ {
+          "name" : "obj",
+          "in" : "body",
+          "schema" : {
+            "type" : "object",
+            "properties" : {
+              "origin" : {
+                "type" : "object",
+                "example" : {
+                  "observation" : "",
+                  "complement" : "",
+                  "street" : "Av. 7 de Setembro",
+                  "number" : "240a",
+                  "neighborhood" : "Centro",
+                  "city" : "Mâncio Lima",
+                  "state" : "Acre",
+                  "address" : "Av. 7 de Setembro",
+                  "latitude" : -7.5944881,
+                  "longitude" : -72.9289233
+                }
+              },
+              "selfstart" : {
+                "type" : "boolean",
+                "example" : "false"
+              },
+              "returntostart" : {
+                "type" : "boolean",
+                "example" : "true"
+              },
+              "points" : {
+                "type" : "object",
+                "example" : [ {
+                  "street" : "Rua 31 de Maio",
+                  "number" : 953,
+                  "neighborhood" : "Centro",
+                  "complement" : "",
+                  "observation" : "",
+                  "city" : "Mâncio Lima",
+                  "state" : "Brasil",
+                  "latitude" : -7.616051000000001,
+                  "longitude" : -72.894094,
+                  "address" : "R. 31 de Maio, 953 - Centro, Mâncio Lima - AC, 69990-000, Brasil"
+                }, {
+                  "street" : "Rua Professor Francisca Oliveira",
+                  "number" : "50",
+                  "neighborhood" : "Centro",
+                  "complement" : "",
+                  "observation" : "",
+                  "city" : "Mâncio Lima",
+                  "state" : "Brasil",
+                  "latitude" : -7.6098453,
+                  "longitude" : -72.9114434,
+                  "address" : "R. Prof. Francisca Oliveira, Mâncio Lima - AC, 69990-000, Brasil"
+                }, {
+                  "street" : "Rua Ancelmo Maia",
+                  "number" : "100",
+                  "neighborhood" : "Centro",
+                  "complement" : "",
+                  "observation" : "",
+                  "city" : "Mâncio Lima",
+                  "state" : "Brasil",
+                  "latitude" : -7.618470999999999,
+                  "longitude" : -72.91266999999999,
+                  "address" : "R. Ancelmo Maia, Mâncio Lima - AC, 69990-000, Brasil"
+                } ]
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/freight" : {
+      "get" : {
+        "tags" : [ "Frete" ],
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Lista os pedidos empresariais solicitados.",
+        "parameters" : [ {
+          "name" : "draw",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Controle de Requisição"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Limite de Listagem. Máximo 50"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "Índice de Deslocamento"
+        }, {
+          "name" : "dateStart",
+          "in" : "query",
+          "type" : "string",
+          "required" : false,
+          "description" : "Data de Início (2018-04-24 14:18:32.773+00)"
+        }, {
+          "name" : "dateEnd",
+          "in" : "query",
+          "type" : "string",
+          "required" : false,
+          "description" : "Data de Fim (2018-04-24 14:18:32.773+00)"
+        }, {
+          "name" : "idOrder",
+          "in" : "query",
+          "type" : "integer",
+          "required" : false,
+          "description" : "ID do Pedido"
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Bad Request"
+          }
+        },
+        "summary" : "Lista Pedidos Empresarial"
+      }
+    },
+    "/request/status" : {
+      "get" : {
+        "tags" : [ "Status" ],
+        "description" : "Lista os status exibidos durante oa andamento do pedido",
+        "parameters" : [ ],
+        "responses" : {
+          "400" : {
+            "description" : "Bad Request"
+          }
+        },
+        "summary" : "Lista Status da Request"
+      }
+    },
+    "/order/status" : {
+      "get" : {
+        "tags" : [ "Status" ],
+        "description" : "Lista os status do Pedido Exibidos na Listagem",
+        "parameters" : [ ],
+        "responses" : {
+          "400" : {
+            "description" : "Bad Request"
+          }
+        },
+        "summary" : "Lista Status do Pedido"
+      }
+    },
+    "/freight/newPOS" : {
+      "post" : {
+        "tags" : [ "Frete" ],
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "description" : "Solicita pedido de entrega empresarial com POS. Integração específica.",
+        "summary" : "Solicita Empresarial com POS.",
+        "parameters" : [ {
+          "name" : "obj",
+          "in" : "body",
+          "schema" : {
+            "type" : "object",
+            "properties" : {
+              "origin" : {
+                "type" : "object",
+                "example" : {
+                  "observation" : "",
+                  "complement" : "",
+                  "street" : "Av. 7 de Setembro",
+                  "number" : "240a",
+                  "neighborhood" : "Centro",
+                  "city" : "Mâncio Lima",
+                  "state" : "Acre",
+                  "address" : "Av. 7 de Setembro",
+                  "latitude" : -7.5944881,
+                  "longitude" : -72.9289233
+                }
+              },
+              "selfstart" : {
+                "type" : "boolean",
+                "example" : "false"
+              },
+              "returntostart" : {
+                "type" : "boolean",
+                "example" : "true"
+              },
+              "points" : {
+                "type" : "object",
+                "example" : [ {
+                  "street" : "Rua 31 de Maio",
+                  "number" : 953,
+                  "neighborhood" : "Centro",
+                  "complement" : "",
+                  "observation" : "",
+                  "city" : "Mâncio Lima",
+                  "state" : "Brasil",
+                  "latitude" : -7.616051000000001,
+                  "longitude" : -72.894094,
+                  "address" : "R. 31 de Maio, 953 - Centro, Mâncio Lima - AC, 69990-000, Brasil",
+                  "payment" : 10.00
+                }, {
+                  "street" : "Rua Professor Francisca Oliveira",
+                  "number" : "50",
+                  "neighborhood" : "Centro",
+                  "complement" : "",
+                  "observation" : "",
+                  "city" : "Mâncio Lima",
+                  "state" : "Brasil",
+                  "latitude" : -7.6098453,
+                  "longitude" : -72.9114434,
+                  "address" : "R. Prof. Francisca Oliveira, Mâncio Lima - AC, 69990-000, Brasil",
+                  "payment" : 20.00
+                }, {
+                  "street" : "Rua Ancelmo Maia",
+                  "number" : "100",
+                  "neighborhood" : "Centro",
+                  "complement" : "",
+                  "observation" : "",
+                  "city" : "Mâncio Lima",
+                  "state" : "Brasil",
+                  "latitude" : -7.618470999999999,
+                  "longitude" : -72.91266999999999,
+                  "address" : "R. Ancelmo Maia, Mâncio Lima - AC, 69990-000, Brasil"
+                } ]
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : { },
+  "components" : {
+    "securitySchemes" : {
+      "bearerAuth" : {
+        "type" : "https",
+        "scheme" : "bearer",
+        "bearerFormat" : "JWT"
+      }
+    },
+    "responses" : {
+      "UnauthorizedError" : {
+        "description" : "Access token is missing or invalid"
+      }
+    }
+  }
+}
